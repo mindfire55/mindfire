@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Happy birthday shawty ! 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #2d3e50; /* dull blue */
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .center {
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .card {
+      background: #34495e;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+    button {
+      background: #1abc9c;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .anime-side {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      z-index: 1;
+    }
+    .anime-left {
+      left: 0;
+      width: 320px;
+      height: 700px;
+      top: 90%;
+    }
+    .anime-right {
+      right: 0;
+      width: 300px;
+      height: 600px;
+      top: 75%;
+    }
+    .anime-side img {
+      width: 100%;
+      height: 35%;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    }
+    canvas {
+      border: 2px solid #1abc9c;
+      background-color: white;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+
+
+  <!-- Anime Characters on Sides -->
+  <div class="anime-side anime-left">
+    <img src="https://imgs.search.brave.com/P3_njnh9A-aBKSZ5Lu42GCjWFh2UCreLpd9dhFANDLc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qll6ZGtZakl4/TkRVdFptTmlZUzAw/TXpFNExUazRNRFV0/TjJRMk56WmpOMlJt/T1RSa1hrRXlYa0Zx/Y0djQC5qcGc" alt="Luffy">
+
+  </div>
+  <div class="anime-side anime-right">
+    <img src="https://imgs.search.brave.com/uRvYbibpGuWqSegKTTn6-uQ7aKB1X3tMQ4yET_NXaC4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvZ29rdS1lMnVz/OHltM3JyYXhibnZl/LmpwZw" alt="Goku">
+    <img src="https://imgs.search.brave.com/-3GwbfWIyaTrhFP3HpjajwTyQoxkqHn9S2Rsoi17ckY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLWNsYW4u/Y29tL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIzLzAxL29uZS1w/dW5jaC1tYW4tc2Fp/dGFtYS1wZnAtMTMu/anBn" alt="Saitama">
+  </div>
+
+  <div class="center">
+    <h1>🎂 Happy Birthday! 🎂</h1>
+    <p>Click below for a magical surprise!</p>
+    <button onclick="revealSurprise()">Reveal Surprise</button>
+  </div>
+
+  <div id="surprise" class="hidden">
+    <div class="card">
+      <h2>🎁 Birthday Gift Message</h2>
+      <p>Wishing you a day filled with love, laughter, and cake!</p>
+    </div>
+
+    <div class="card">
+      <h2>🎵 Birthday Song</h2>
+      <audio controls>
+        <source src="c:\Users\HP\Pictures\Indian sing happy birthday.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <div class="card">
+      <h2>🎨 Drawing Pad</h2>
+      <canvas id="drawingCanvas" width="300" height="200"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>🧠 Birthday Quiz</h2>
+      <p>Kya apke toothpaste mein namak hai? <input type="text" id="bdayInput"> <button onclick="checkBirthday()">Check</button></p>
+      <p id="quizResult"></p>
+    </div>
+
+    <div class="card">
+      <h2>📅 Countdown to Next Birthday</h2>
+      <p>Enter your birthday (MM-DD): <input type="text" id="nextBday"> <button onclick="showCountdown()">Start</button></p>
+      <p id="countdownResult"></p>
+    </div>
+
+    <div class="card">
+      <h2>📖 Birthday Quotes</h2>
+      <p id="quote"></p>
+      <button onclick="showQuote()">New Quote</button>
+    </div>
+
+    <div class="card">
+      <h2>🧸 Virtual Gift</h2>
+      <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Gift" width="100%">
+    </div>
+
+    <div class="card">
+      <h2>📸 Upload Your Picture</h2>
+      <input type="file" accept="image/*" onchange="previewImage(event)">
+      <img id="uploadedImage" style="margin-top:20px; max-width: 100%;">
+    </div>
+  </div>
+
+  <script>
+    function revealSurprise() {
+      document.getElementById("surprise").classList.remove("hidden");
+    }
+
+    const canvas = document.getElementById("drawingCanvas");
+    const ctx = canvas?.getContext("2d");
+    let painting = false;
+    if (canvas) {
+      canvas.addEventListener("mousedown", () => painting = true);
+      canvas.addEventListener("mouseup", () => painting = false);
+      canvas.addEventListener("mousemove", draw);
+    }
+    function draw(e) {
+      if (!painting || !ctx) return;
+      ctx.lineWidth = 3;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "black";
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    }
+
+    function checkBirthday() {
+      const input = document.getElementById("bdayInput").value.trim();
+      const today = new Date().toISOString().slice(5, 10);
+      document.getElementById("quizResult").innerText = input === today ? "🎉 You got it! Today is your day!" : "Not quite, try again!";
+    }
+
+    function showCountdown() {
+      const input = document.getElementById("nextBday").value;
+      const [month, day] = input.split("-").map(Number);
+      const now = new Date();
+      let bday = new Date(now.getFullYear(), month - 1, day);
+      if (bday < now) bday.setFullYear(bday.getFullYear() + 1);
+      const diff = bday - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById("countdownResult").innerText = `⏳ ${days} day(s) until your birthday!`;
+    }
+
+    const quotes = [
+      "Tension tab leni hai jab paper ajaey",
+      "Insaan bhi kya chiz hai🧀.",
+      "Sabse zyada maza 50 cent ke crontoz khane mein hai!",
+      
+    ];
+    function showQuote() {
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("quote").innerText = quote;
+    }
+
+    function previewImage(event) {
+      const output = document.getElementById("uploadedImage");
+          output.src = URL.createObjectURL(event.target.files[0]);
+    }
+  </script>
+</body>
+</html>
+
+<div class="color-picker-container">
+    <p style="color: white;">🎨 Change Theme Color</p>
+    <input type="color" id="colorPicker" onchange="changeThemeColor(event)">
+  </div>
+  
+  <style>
+    .color-picker-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 10px;
+    }
+  
+    .color-picker-container input {
+      border: none;
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+  </style>
+  
+  <script>
+    function changeThemeColor(event) {
+      document.body.style.backgroundColor = event.target.value;
+    }
+  </script>
+
+</head>
+</body>
+
+
